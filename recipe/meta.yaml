@@ -26,11 +26,13 @@ source:
     # Fix pragma message
     - patches/0004-fix-pragma-message.patch
     - patches/0005-remove-installation-requirements-handled-by-conda.patch
-      #- patches/0006-do-not-escape-quotes-for-VERSION_INFO.patch
+    # some weird interaction with pybind11 + quote escapes;
+    # upstream CI need quotes escaped, we (seems to be an issue on win64 only) need them unescaped
+    - patches/0006-do-not-escape-quotes-for-VERSION_INFO.patch  # [win]
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install ./python_bindings  --no-deps --no-build-isolation -vv
+  script: {{ PYTHON }} -m pip install ./python_bindings --no-deps --no-build-isolation -vv
   missing_dso_whitelist:  # [s390x]
     - '$RPATH/ld64.so.1'  # [s390x]
 
@@ -45,7 +47,7 @@ requirements:
     - psutil
     - pip
     # Upstream specifies <2.6.2, but seems okay to use latest pybind11, see https://github.com/nmslib/nmslib/pull/488
-    - pybind11 >=2.2.3
+    - pybind11 2.10.1
     - numpy {{ numpy }}
     - wheel
   run:
