@@ -26,7 +26,7 @@ source:
     # Fix pragma message
     - patches/0004-fix-pragma-message.patch
     - patches/0005-remove-installation-requirements-handled-by-conda.patch
-    - patches/0006-do-not-escape-quotes-for-VERSION_INFO.patch
+      #- patches/0006-do-not-escape-quotes-for-VERSION_INFO.patch
 
 build:
   number: 0
