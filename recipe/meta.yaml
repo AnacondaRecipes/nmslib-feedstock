@@ -18,8 +18,7 @@ source:
     # Hopefully, we can provide more specific builds per CPU architecture
     # in the future, see conda-forge/conda-forge.github.io#1261
     - patches/0001-silence-log-that-tells-people-to-install-from-pip.patch
-    # backport nmslib/nmslib#488 for compatibility with newer pybind11
-    # https://github.com/nmslib/nmslib/pull/488
+    # Okay to use latest pybind11: https://github.com/nmslib/nmslib/pull/488
     - patches/0002-Fix-import-on-newer-versions-of-pybind11-fixes-471.patch
     # Remove compiler flag that causes build failure
     - patches/0003-remove-march-compiler-flag.patch
@@ -34,7 +33,7 @@ build:
   number: 0
   script: {{ PYTHON }} -m pip install ./python_bindings --no-deps --no-build-isolation -vv
   missing_dso_whitelist:  # [s390x]
-    - '$RPATH/ld64.so.1'  # [s390x]
+    - 'ld64.so.1'  # [s390x]
 
 requirements:
   build:
